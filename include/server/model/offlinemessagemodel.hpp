@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "config.h"
 using namespace std;
 
 // 提供离线消息表的操作接口方法
@@ -10,13 +11,13 @@ class OfflineMsgModel
 {
 public:
     // 存储用户的离线消息
-    void insert(int userid, string msg);
+    void insert(int userid, string msg, Config &conf);
 
     // 删除用户的离线消息
-    void remove(int userid);
+    void remove(int userid, Config &conf);
 
     // 查询用户的离线消息
-    vector<string> query(int userid);
+    vector<string> query(int userid, Config &conf);
 };
 
 #endif

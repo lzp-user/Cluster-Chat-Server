@@ -1,15 +1,18 @@
 #include "chatserver.hpp"
 #include "chatservice.hpp"
+#include "iniconfig.h"
+#include "log.h"
 #include <iostream>
 #include <signal.h>
+
 using namespace std;
 
 // 处理服务器ctrl+c结束后，重置user的状态信息
-void resetHandler(int)
-{
-    ChatService::instance()->reset();
-    exit(0);
-}
+// void resetHandler()
+// {
+//     ChatService::instance()->reset();
+//     exit(0);
+// }
 
 int main(int argc, char **argv)
 {
@@ -19,15 +22,33 @@ int main(int argc, char **argv)
         exit(-1);
     }
 
+    // 初始化日志模块
+    string logconf = "../../conf/log.conf";
+    if (!Logger::instance()->init(logconf))
+    {
+        fprintf(stderr, "init log module failed.\n");
+        return -2;
+    }
+
+    // 加载数据库 服务器配置文件
+    string dataconf = "../../conf/chatserver.ini";
+    Iniconfig iniconfig;
+    if (!iniconfig.loadfile(dataconf))
+    {
+        // printf("load %s failed. \n", argv[1]);
+        LOG_ERROR("load %s failed.", dataconf); // 相当于Logger::instance()->GetHandle()->error("load %s failed.", argv[1]);
+        return -3;
+    }
+
     // 解析通过命令行参数传递的ip和port
     char *ip = argv[1];
     uint16_t port = atoi(argv[2]);
 
-    signal(SIGINT, resetHandler);
-
     EventLoop loop;
     InetAddress addr(ip, port);
-    ChatServer server(&loop, addr, "ChatServer");
+    ChatServer server(&loop, addr, "ChatServer", iniconfig.getconfig());
+
+    // signal(SIGINT, resetHandler);
 
     server.start();
     loop.loop();

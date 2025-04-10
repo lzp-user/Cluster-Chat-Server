@@ -4,10 +4,11 @@
 #include <hiredis/hiredis.h>
 #include <thread>
 #include <functional>
+#include "iniconfig.h"
 using namespace std;
 
 /*
-redis作为集群服务器通信的基于发布-订阅消息队列时，会遇到两个难搞的bug问题，参考我的博客详细描述：
+redis作为集群服务器通信的基于发布-订阅消息队列时，会遇到两个难搞的bug问题，参考博客详细描述：
 https://blog.csdn.net/QIANGWEIYUAN/article/details/97895611
 */
 class Redis
@@ -17,7 +18,7 @@ public:
     ~Redis();
 
     // 连接redis服务器
-    bool connect();
+    bool connect(Config &conf);
 
     // 向redis指定的通道channel发布消息
     bool publish(int channel, string message);

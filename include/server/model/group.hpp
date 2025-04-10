@@ -2,6 +2,7 @@
 #define GROUP_H
 
 #include "groupuser.hpp"
+#include "config.h"
 #include <string>
 #include <vector>
 using namespace std;

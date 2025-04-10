@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 4.0)
 project(chat)
 
 # 配置编译选项
@@ -13,8 +13,18 @@ include_directories(${PROJECT_SOURCE_DIR}/include/server)
 include_directories(${PROJECT_SOURCE_DIR}/include/server/db)
 include_directories(${PROJECT_SOURCE_DIR}/include/server/model)
 include_directories(${PROJECT_SOURCE_DIR}/include/server/redis)
-include_directories(${PROJECT_SOURCE_DIR}/thirdparty)
+include_directories(${PROJECT_SOURCE_DIR}/include/server/common)
+#三方库 头文件
+include_directories(${PROJECT_SOURCE_DIR}/thirdparty/include/json)
+include_directories(${PROJECT_SOURCE_DIR}/thirdparty/include/log4cpp)
+include_directories(${PROJECT_SOURCE_DIR}/thirdparty/include/iniparser)
+
+# 配置库文件的搜索路径
 link_directories(/usr/lib64/mysql)
+#三方库 库文件
+link_directories(${PROJECT_SOURCE_DIR}/thirdparty/lib/json)
+link_directories(${PROJECT_SOURCE_DIR}/thirdparty/lib/log4cpp)
+link_directories(${PROJECT_SOURCE_DIR}/thirdparty/lib/iniparser)
 
 # 加载子目录
 add_subdirectory(src)
