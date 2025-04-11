@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/rootlzp/Cluster-Chat-Server/build/cmake_install.cmake",
+		"/home/rootlzp/Cluster-Chat-Server/build/src/cmake_install.cmake",
+		"/home/rootlzp/Cluster-Chat-Server/build/src/server/cmake_install.cmake",
+		"/home/rootlzp/Cluster-Chat-Server/build/src/client/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
